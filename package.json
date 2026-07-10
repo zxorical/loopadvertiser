@@ -1,0 +1,11 @@
+{
+  "name": "discord-advertiser",
+  "type": "module",
+  "scripts": {
+    "start": "node advertiser.js"
+  },
+  "dependencies": {
+    "discord.js-selfbot-v13": "^3.4.4",
+    "express": "^4.18.2"
+  }
+}

@@ -6,7 +6,17 @@ import express from 'express';
 // ---------------------------------------------------------------------------
 const TOKEN = process.env.TOKEN;               // your selfbot token
 const CHANNEL_ID = '1258415041116508224';       // fixed channel
-const INVITE = 'https://discord.gg/vzYvj5JsxJ'; // your invite
+const INVITE = [
+  '# Want to find every giveaway and scrim ?',
+  'Well look no further as this server pings you when a giveaway or scrim is created and takes you to it with 1 click',
+  'We will host giveaways as we gain more members and progress the server',
+  '————————————————',
+  '————————————————',
+  'How to join',
+  'Dm me',
+  'or',
+  'https://discord.gg/NwTrgKn2m'
+];
 const COOLDOWN = 6 * 60 * 1000;                // 5 minutes
 
 if (!TOKEN) {
@@ -42,7 +52,8 @@ client.once('ready', async () => {
 
   const sendInvite = async () => {
     try {
-      await channel.send(INVITE);
+      const message = INVITE.join('\n');
+      await channel.send(message);
       console.log(`[${new Date().toISOString()}] Invite sent.`);
     } catch (err) {
       console.error('Failed to send:', err.message);

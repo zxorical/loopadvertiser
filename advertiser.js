@@ -7,16 +7,27 @@ import express from 'express';
 const TOKENS = process.env.TOKENS ? process.env.TOKENS.split(',').map(t => t.trim()) : [];
 const CHANNEL_ID = '1258415041116508224';       // fixed channel
 const INVITE = [
-  '# Want to find every giveaway and scrim ?',
-  'Well look no further as this server pings you when a giveaway or scrim is created and takes you to it with 1 click',
-  'We will host giveaways as we gain more members and progress the server',
-  '————————————————',
-  '————————————————',
-  'How to join',
-  'Dm me',
-  'or',
-  'https://discord.gg/NwTrgKn2m'
+  '# Untitled',
+  '',
+  'The best giveaway tracker in the VRFS community currently.',
+  '',
+  '**What we do differently:**',
+  '',
+  '- Customisation',
+  '- Community Feedback',
+  '- Wide Range Of Tracked Servers',
+  '- Regular Updates',
+  '',
+  '**What we have:**',
+  '',
+  '- A wide range of tracked servers',
+  '- Auto Giveaway Joiner',
+  '- Cleaner Ui',
+  '',
+  'https://discord.gg/vfDenTSEvD'
 ];
+```
+
 const COOLDOWN = 6 * 60 * 1000;                // 6 minutes
 
 if (TOKENS.length === 0) {

@@ -2,10 +2,15 @@ import { Client } from 'discord.js-selfbot-v13';
 import express from 'express';
 
 // ---------------------------------------------------------------------------
-// Configuration (set in Render)
+// Configuration
 // ---------------------------------------------------------------------------
-const TOKENS = process.env.TOKENS ? process.env.TOKENS.split(',').map(t => t.trim()) : [];
-const CHANNEL_ID = '1258415041116508224';       // fixed channel
+
+const TOKENS = process.env.TOKENS
+  ? process.env.TOKENS.split(',').map(t => t.trim())
+  : [];
+
+const CHANNEL_ID = '1258415041116508224';
+
 const INVITE = [
   '# Untitled',
   '',
@@ -26,9 +31,8 @@ const INVITE = [
   '',
   'https://discord.gg/vfDenTSEvD'
 ];
-```
 
-const COOLDOWN = 6 * 60 * 1000;                // 6 minutes
+const COOLDOWN = 5.1 * 60 * 1000;
 
 if (TOKENS.length === 0) {
   console.error('Missing TOKENS environment variable or no tokens provided');
@@ -40,10 +44,13 @@ console.log(`Found ${TOKENS.length} token(s) to use`);
 // ---------------------------------------------------------------------------
 // Express server for Render health checks
 // ---------------------------------------------------------------------------
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.get('/', (_, res) => res.send('Advertiser running'));
+app.get('/', (_, res) => {
+  res.send('Advertiser running');
+});
 
 app.listen(PORT, () => {
   console.log(`Health server listening on port ${PORT}`);
@@ -53,50 +60,76 @@ app.listen(PORT, () => {
 // Discord selfbot
 // ---------------------------------------------------------------------------
 
-// Function to create a client for a specific token
 const createClient = (token, index) => {
   const client = new Client();
 
   client.once('ready', async () => {
-    console.log(`[Bot ${index + 1}] Logged in as ${client.user.tag}`);
+    console.log(
+      `[Bot ${index + 1}] Logged in as ${client.user.tag}`
+    );
 
     try {
       const channel = await client.channels.fetch(CHANNEL_ID);
+
       if (!channel || !channel.isText()) {
-        console.error(`[Bot ${index + 1}] Channel not found or not a text channel.`);
+        console.error(
+          `[Bot ${index + 1}] Channel not found or not a text channel.`
+        );
         return;
       }
 
       const sendInvite = async () => {
         try {
           const message = INVITE.join('\n');
+
           await channel.send(message);
-          console.log(`[Bot ${index + 1}] [${new Date().toISOString()}] Invite sent.`);
+
+          console.log(
+            `[Bot ${index + 1}] [${new Date().toISOString()}] Invite sent.`
+          );
         } catch (err) {
-          console.error(`[Bot ${index + 1}] Failed to send:`, err.message);
+          console.error(
+            `[Bot ${index + 1}] Failed to send:`,
+            err.message
+          );
         }
       };
 
-      // Send first invite immediately, then every 6 minutes
+      // Send immediately
       await sendInvite();
+
+      // Then every 6 minutes
       setInterval(sendInvite, COOLDOWN);
+
     } catch (err) {
-      console.error(`[Bot ${index + 1}] Error setting up:`, err.message);
+      console.error(
+        `[Bot ${index + 1}] Error setting up:`,
+        err.message
+      );
     }
   });
 
   client.on('error', (error) => {
-    console.error(`[Bot ${index + 1}] Client error:`, error.message);
+    console.error(
+      `[Bot ${index + 1}] Client error:`,
+      error.message
+    );
   });
 
   client.login(token).catch(err => {
-    console.error(`[Bot ${index + 1}] Failed to login:`, err.message);
+    console.error(
+      `[Bot ${index + 1}] Failed to login:`,
+      err.message
+    );
   });
 
   return client;
 };
 
+// ---------------------------------------------------------------------------
 // Create a client for each token
+// ---------------------------------------------------------------------------
+
 TOKENS.forEach((token, index) => {
   if (token) {
     createClient(token, index);

@@ -12,24 +12,9 @@ const TOKENS = process.env.TOKENS
 const CHANNEL_ID = '1258415041116508224';
 
 const INVITE = [
-  '# Untitled',
+  '# AUTOMATICALLY JOIN EVERY GIVEAWAY AND WIN OVER 10 CSTOMS DAILY!!',
   '',
-  'The best giveaway tracker in the VRFS community currently.',
-  '',
-  '**What we do differently:**',
-  '',
-  '- Customisation',
-  '- Community Feedback',
-  '- Wide Range Of Tracked Servers',
-  '- Regular Updates',
-  '',
-  '**What we have:**',
-  '',
-  '- A wide range of tracked servers',
-  '- Auto Giveaway Joiner',
-  '- Cleaner Ui',
-  '',
-  'https://discord.gg/vfDenTSEvD'
+  'discord.gg/untitledtracker'
 ];
 
 const COOLDOWN = 5.1 * 60 * 1000;
